@@ -17,7 +17,7 @@ const config = {
 const sqlCon = Promise.promisifyAll(mysql.createConnection({
     host    : 'localhost',
     user    : 'root',
-    password: 'SSLgR7a7',
+    password: '',
     database: 'buckutt'
 }));
 
