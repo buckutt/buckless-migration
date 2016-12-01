@@ -36,6 +36,15 @@ const groupByName = {};
  * Minimal seeds
  */
 
+const points = [
+    {
+        name     : 'Foyer',
+        createdAt: new Date(),
+        editedAt : new Date(),
+        isRemoved: false
+    }
+];
+
 const events = [
     {
         name  : 'BDE UTT',
@@ -49,7 +58,7 @@ const events = [
     }
 ];
 
-const periods = [
+let periods = [
     {
         name     : 'Éternité',
         start    : new Date(2010, 1, 1),
@@ -160,6 +169,20 @@ function addUsers() {
                             if (!user.credit) {
                                 return;
                             }
+
+                            rethink
+                                .table('MeanOfLogin')
+                                .insert({
+                                    type     : 'etuMail',
+                                    data     : user.mail,
+                                    isRemoved: false,
+                                    User_id  : users[user.id],
+                                    createdAt: new Date(),
+                                    editedAt : new Date()
+                                })
+                                .run(nosqlCon)
+                                .catch(() => console.log(`[ERROR] MeanOfLogin, UserId: ${user.id},
+                                    Type: mail`));
 
                             // Add initial reload
                             return rethink
@@ -312,11 +335,25 @@ function setKeys(insts, keys) {
 function seedData() {
     return rethink.table('Event').insert(events).run(nosqlCon)
         .then(cursor => setKeys(events, cursor.generated_keys))
-        .then(() =>
-            rethink
+        .then(() => {
+            periods = periods.map(period => {
+                period.Event_id = events[0].id;
+
+                return period;
+            });
+
+            return rethink
                 .table('Period').insert(periods).run(nosqlCon)
                 .then(cursor => {
                     setKeys(periods, cursor.generated_keys);
+                })
+            }
+        )
+        .then(() =>
+            rethink
+                .table('Point').insert(points).run(nosqlCon)
+                .then(cursor => {
+                    setKeys(points, cursor.generated_keys);
                 })
         )
         .then(() => console.log('[OK] Data seeds'));
