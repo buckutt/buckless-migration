@@ -264,7 +264,7 @@ function addMols() {
                     rethink
                         .table('MeanOfLogin')
                         .insert({
-                            type     : mols[molUser.MeanOfLoginId],
+                            type     : mols[molUser.MeanOfLoginId].replace('carte_etu', 'etuId'),
                             data     : molUser.data,
                             blocked  : false,
                             isRemoved: !!molUser.isRemoved,
