@@ -175,6 +175,7 @@ function addUsers() {
                                 .insert({
                                     type     : 'etuMail',
                                     data     : user.mail,
+                                    blocked  : false,
                                     isRemoved: false,
                                     User_id  : users[user.id],
                                     createdAt: new Date(),
@@ -265,6 +266,7 @@ function addMols() {
                         .insert({
                             type     : mols[molUser.MeanOfLoginId],
                             data     : molUser.data,
+                            blocked  : false,
                             isRemoved: !!molUser.isRemoved,
                             User_id  : users[molUser.UserId],
                             createdAt: new Date(),
