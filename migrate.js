@@ -367,7 +367,6 @@ function seedData() {
 
 connectToMaria()
     .then(connectToRethink)
-    .then(resetDataBase)
     .then(addUsers)
     .then(addGroups)
     .then(fetchMols)
