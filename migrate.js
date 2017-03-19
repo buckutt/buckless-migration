@@ -142,7 +142,9 @@ function addUsers() {
             rows.forEach((user) => {
                 // Add user
                 // Filter `null`
-                const credit = (user.credit) ? user.credit : 0;
+                const credit   = (user.credit) ? user.credit : 0;
+                const pin      = (user.pin) ? user.pin : 'togen';
+                const password = (user.password) ? user.password : 'togen';
 
                 userPromises.push(
                     rethink
@@ -151,8 +153,8 @@ function addUsers() {
                             firstname  : user.firstname,
                             lastname   : user.lastname,
                             nickname   : user.nickname,
-                            pin        : user.pin,
-                            password   : user.password,
+                            pin,
+                            password,
                             mail       : user.mail,
                             credit,
                             isTemporary: !!user.isTemporary,
@@ -260,11 +262,13 @@ function addMols() {
                     return;
                 }
 
+                const type = (mols[molUser.MeanOfLoginId] === 'carte_etu') ? 'etuId' : mols[molUser.MeanOfLoginId];
+
                 usersMolsPromises.push(
                     rethink
                         .table('MeanOfLogin')
                         .insert({
-                            type     : mols[molUser.MeanOfLoginId].replace('carte_etu', 'etuId'),
+                            type,
                             data     : molUser.data,
                             blocked  : false,
                             isRemoved: !!molUser.isRemoved,
