@@ -145,7 +145,7 @@ function addUsers() {
                 const credit   = (user.credit) ? user.credit : 0;
                 const pin      = (user.pin) ? user.pin : 'togen';
                 const password = (user.password) ? user.password : 'togen';
-                const nickname = (user.nickname) ? user.nickame : '';
+                const nickname = (user.nickname) ? user.nickname : '';
 
                 userPromises.push(
                     rethink
