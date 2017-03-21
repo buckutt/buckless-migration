@@ -7,7 +7,7 @@ const Promise = require('bluebird');
  */
 
 const config = {
-    db: 'bucklessServer_example'
+    db: 'buckutt_server'
 };
 
 /**
@@ -195,6 +195,7 @@ function addUsers() {
                                     Buyer_id : users[user.id],
                                     Seller_id: users[user.id],
                                     credit,
+                                    type     : 'gift',
                                     trace    : 'Transfert de l\'ancien solde BuckUTT',
                                     isRemoved: false,
                                     createdAt: new Date(),
