@@ -192,7 +192,8 @@ function addUsers() {
                             return rethink
                                 .table('Reload')
                                 .insert({
-                                    User_id  : users[user.id],
+                                    Buyer_id : users[user.id],
+                                    Seller_id: users[user.id],
                                     credit,
                                     trace    : 'Initial reload',
                                     isRemoved: false,
