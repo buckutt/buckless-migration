@@ -195,7 +195,7 @@ function addUsers() {
                                     Buyer_id : users[user.id],
                                     Seller_id: users[user.id],
                                     credit,
-                                    trace    : 'Initial reload',
+                                    trace    : 'Transfert de l\'ancien solde BuckUTT',
                                     isRemoved: false,
                                     createdAt: new Date(),
                                     editedAt : new Date()
