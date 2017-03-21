@@ -38,6 +38,12 @@ const groupByName = {};
 
 const points = [
     {
+        name     : 'Internet',
+        createdAt: new Date(),
+        editedAt : new Date(),
+        isRemoved: false
+    },
+    {
         name     : 'Foyer',
         createdAt: new Date(),
         editedAt : new Date(),
@@ -194,6 +200,7 @@ function addUsers() {
                                 .insert({
                                     Buyer_id : users[user.id],
                                     Seller_id: users[user.id],
+                                    Point_id : points[0].id,
                                     credit,
                                     type     : 'gift',
                                     trace    : 'Transfert de l\'ancien solde BuckUTT',
@@ -374,11 +381,11 @@ function seedData() {
 
 connectToMaria()
     .then(connectToRethink)
+    .then(seedData)
     .then(addUsers)
     .then(addGroups)
     .then(fetchMols)
     .then(addMols)
-    .then(seedData)
     .then(addGroupPeriod)
     .then(closeSqlCon)
     .then(closeNosqlCon)
