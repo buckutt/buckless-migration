@@ -319,7 +319,13 @@ function addGroupPeriod() {
                 usersGroupsPromises.push(
                     rethink
                         .table('GroupPeriod')
-                        .insert({ Group_id: groups[userGroup.GroupId], Period_id: translatePeriods[userGroup.PeriodId].id })
+                        .insert({
+                            Group_id : groups[userGroup.GroupId],
+                            Period_id: translatePeriods[userGroup.PeriodId].id,
+                            createdAt: new Date(),
+                            editedAt : new Date(),
+                            isRemoved: false
+                        })
                         .run(nosqlCon)
                         .then(doc => {
                             return rethink
