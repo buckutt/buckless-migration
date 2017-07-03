@@ -38,12 +38,6 @@ const groupByName = {};
 
 const points = [
     {
-        name     : 'Internet',
-        createdAt: new Date(),
-        editedAt : new Date(),
-        isRemoved: false
-    },
-    {
         name     : 'Foyer',
         createdAt: new Date(),
         editedAt : new Date(),
@@ -363,6 +357,14 @@ function seedData() {
                 .table('Point').insert(points).run(nosqlCon)
                 .then(cursor => {
                     setKeys(points, cursor.generated_keys);
+                })
+        )
+        .then(() => 
+            rethink
+                .table('Point')
+                .getAll('Internet', { index: 'name' })
+                .then((defaultPoint) => {
+                    points = [ defaultPoints ].concat(points);
                 })
         )
         .then(() => console.log('[OK] Data seeds'));
