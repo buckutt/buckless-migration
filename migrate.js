@@ -36,7 +36,7 @@ const groupByName = {};
  * Minimal seeds
  */
 
-const points = [
+let points = [
     {
         name     : 'Foyer',
         createdAt: new Date(),
