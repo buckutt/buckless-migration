@@ -315,28 +315,15 @@ function addGroupPeriod() {
                 if (!groups[userGroup.GroupId] || !users[userGroup.UserId]) {
                     return;
                 }
-
+                
                 usersGroupsPromises.push(
                     rethink
-                        .table('GroupPeriod')
+                        .table('GroupUser')
                         .insert({
-                            Group_id : groups[userGroup.GroupId],
+                            Group: groups[userGroup.GroupId],
                             Period_id: translatePeriods[userGroup.PeriodId].id,
-                            createdAt: new Date(),
-                            editedAt : new Date(),
-                            isRemoved: false
+                            User: users[userGroup.UserId]
                         })
-                        .run(nosqlCon)
-                        .then(doc => {
-                            return rethink
-                                .table('GroupPeriod_User')
-                                .insert({ GroupPeriod_id: doc.generated_keys[0], User_id: users[userGroup.UserId] })
-                                .run(nosqlCon)
-                                .catch(() => console.log(`[ERROR] GroupPeriod_User, GroupPeriodId: ${doc.generated_keys[0]},
-                                    UserId: ${userGroup.UserId}`))
-                        })
-                        .catch(() => console.log(`[ERROR] GroupPeriod, PeriodId: ${userGroup.PeriodId},
-                            GroupId: ${userGroup.GroupId}`))
                 );
             });
         })
