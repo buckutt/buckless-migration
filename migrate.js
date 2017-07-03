@@ -362,9 +362,10 @@ function seedData() {
         .then(() => 
             rethink
                 .table('Point')
-                .getAll('Internet', { index: 'name' })
-                .then((defaultPoint) => {
-                    points = [ defaultPoints ].concat(points);
+                .getAll('Internet', { index: 'name' }).run(nosqlCon)
+                .then((defaultPoints) => {
+                    // defaultPoints will always be [ internetPoint ]
+                    points = [ defaultPoints[0] ].concat(points);
                 })
         )
         .then(() => console.log('[OK] Data seeds'));
