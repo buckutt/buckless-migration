@@ -61,24 +61,24 @@ const events = [
 let periods = [
     {
         name     : 'Éternité',
-        start    : new Date(2010, 1, 1),
-        end      : new Date(2050, 1, 1),
+        start    : new Date(2010, 0, 1),
+        end      : new Date(2050, 0, 1),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
     },
     {
         name     : 'A16',
-        start    : new Date(2016, 9, 5),
-        end      : new Date(2017, 3, 6),
+        start    : new Date(2016, 8, 5),
+        end      : new Date(2017, 2, 6),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
     },
     {
         name     : 'P17',
-        start    : new Date(2017, 2, 20),
-        end      : new Date(2017, 9, 18),
+        start    : new Date(2017, 1, 20),
+        end      : new Date(2017, 8, 18),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
