@@ -322,6 +322,7 @@ function addGroupPeriod() {
                             Period_id: translatePeriods[userGroup.PeriodId].id,
                             User: users[userGroup.UserId]
                         })
+                        .run(nosqlCon)
                 );
             });
         })
