@@ -7,7 +7,7 @@ const Promise = require('bluebird');
  */
 
 const config = {
-    db: 'buckutt_server'
+    db: 'BuckUTT_server'
 };
 
 /**
@@ -17,7 +17,7 @@ const config = {
 const sqlCon = Promise.promisifyAll(mysql.createConnection({
     host    : 'localhost',
     user    : 'root',
-    password: '',
+    password: 'buckutt',
     database: 'buckutt'
 }));
 
@@ -50,7 +50,11 @@ const events = [
         name  : 'BDE UTT',
         config: {
             minReload    : 100,
-            maxPerAccount: 10000
+            maxPerAccount: 10000,
+            maxAlcohol   : 0,
+            hasGroups    : null,
+            hasFundations: null,
+            hasPeriods   : null
         },
         createdAt: new Date(),
         editedAt : new Date(),
@@ -61,24 +65,24 @@ const events = [
 let periods = [
     {
         name     : 'Éternité',
-        start    : new Date(2010, 0, 1),
-        end      : new Date(2050, 0, 1),
+        start    : new Date(2010, 1, 1),
+        end      : new Date(2050, 1, 1),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
     },
     {
         name     : 'A16',
-        start    : new Date(2016, 8, 5),
-        end      : new Date(2017, 2, 6),
+        start    : new Date(2016, 9, 5),
+        end      : new Date(2017, 3, 6),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
     },
     {
         name     : 'P17',
-        start    : new Date(2017, 1, 20),
-        end      : new Date(2017, 8, 18),
+        start    : new Date(2017, 2, 20),
+        end      : new Date(2017, 9, 18),
         createdAt: new Date(),
         editedAt : new Date(),
         isRemoved: false
@@ -309,7 +313,7 @@ function addGroupPeriod() {
                 if (!groups[userGroup.GroupId] || !users[userGroup.UserId]) {
                     return;
                 }
-                
+
                 usersGroupsPromises.push(
                     rethink
                         .table('GroupUser')
@@ -359,10 +363,12 @@ function seedData() {
                     setKeys(points, cursor.generated_keys);
                 })
         )
-        .then(() => 
+        .then(() =>
             rethink
                 .table('Point')
-                .getAll('Internet', { index: 'name' }).run(nosqlCon)
+                .getAll('Internet', { index: 'name' })
+                .coerceTo('array')
+                .run(nosqlCon)
                 .then((defaultPoints) => {
                     // defaultPoints will always be [ internetPoint ]
                     points = [ defaultPoints[0] ].concat(points);
@@ -377,7 +383,7 @@ function seedData() {
 
 connectToMaria()
     .then(connectToRethink)
-    .then(resetDataBase)
+//    .then(resetDataBase)
     .then(seedData)
     .then(addUsers)
     .then(addGroups)
@@ -387,6 +393,7 @@ connectToMaria()
     .then(closeSqlCon)
     .then(closeNosqlCon)
     .catch(error => {
+        console.error(error);
         console.log(`[ERR] ${error.stack}`);
         return process.exit(1);
     });
