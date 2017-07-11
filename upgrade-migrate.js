@@ -7,7 +7,7 @@ const Promise = require('bluebird');
  */
 
 const config = {
-    db: 'buckuttMigration'
+    db: 'BuckUTT_server'
 };
 
 /**
@@ -17,8 +17,8 @@ const config = {
 const sqlCon = Promise.promisifyAll(mysql.createConnection({
     host    : 'localhost',
     user    : 'root',
-    password: '',
-    database: 'buckuttMigration'
+    password: 'buckutt',
+    database: 'buckutt'
 }));
 
 let nosqlCon = null;
